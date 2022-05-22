@@ -21,17 +21,24 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/master', function () {
-    return view('layouts/master');
+Auth::routes();
+Route::middleware('auth')->group(function () {
+    Route::get('/master', function () {
+        return view('layouts/master');
+    });
+    Route::get('/', function () {
+        return view('dash');
+    });
+    
+    
+    Route::resource('actual', ActualController::class);
+    Route::resource('province', ProvinceController::class);
+    Route::get('forecasting',[CalculateController::class, 'forecastingSelect']);
+    // Route::get('forecastingSES',[CalculateController::class, 'forecastingSelect']);
+    Route::post('calculate', [CalculateController::class, 'index']);
+    // Route::post('calculateses', [CalculateController::class, 'indexSES']);
+    
+    
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-Route::get('/dash', function () {
-    return view('dash');
-});
-
-
-Route::resource('actual', ActualController::class);
-Route::resource('province', ProvinceController::class);
-Route::get('forecasting',[CalculateController::class, 'forecastingSelect']);
-// Route::get('forecastingSES',[CalculateController::class, 'forecastingSelect']);
-Route::post('calculate', [CalculateController::class, 'index']);
-// Route::post('calculateses', [CalculateController::class, 'indexSES']);

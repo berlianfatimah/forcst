@@ -21,6 +21,8 @@
                     <th>Tahun</th>
                     <th>Produksi Padi</th>
                     <th>Prediksi Produksi Padi</th>
+                    <th>Absloute Error</th>
+                    <th>Presentase Error</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,8 @@
                     <td>{{ $result['periode'] }}</td>
                     <td>{{ $result['aktual'] }}</td>
                     <td>{{ round($result['f'], 2) }}</td>
+                    <td>{{ round($result['abs_e'], 2) }}</td>
+                    <td>{{ round($result['percent_e'], 2) }}</td>
                   </tr>
                   @empty
                   @endforelse
@@ -77,9 +81,7 @@
             <h4 class="card-title">Kesimpulan</h4>
             <hr>
             <div>
-              <p>jadi hasil peramalan .. dengan mape ...</p>
-              <p>Dari perhitungan yang dilakukan, diperoleh nilai alpha optimal yaitu {{ $optimal['alpha'] }} dengan mape sebesar {{ $optimal['mape'] }} <br>
-                Maka, peramalan periode selanjutnya adalah sebesar {{ $optimal['forecasting'] }}</p>
+              <p>Peramalan hasil produksi padi periode selanjutnya sebesar {{ $optimal['forecasting'] }} Ton, dengan Mean Absolute Presentase Error (MAPE) sebesar {{ $optimal['mape'] }}% dan Alpha optimal sebesar {{ $optimal['alpha'] }} </p>
             </div>
           </div>
         </div>

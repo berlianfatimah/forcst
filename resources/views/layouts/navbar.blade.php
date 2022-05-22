@@ -15,10 +15,14 @@
               <i class="ti-settings text-success"></i>
               Settings
             </a>
-            <a class="dropdown-item">
+            <form action="{{ route('logout') }}"  method="post">
+              @csrf
+              <button type="submit" class="dropdown-item"> <i class="ti-power-off text-success"></i>Logout</button>
+            </form>
+            {{-- <a class="dropdown-item">
               <i class="ti-power-off text-success"></i>
               Logout
-            </a>
+            </a> --}}
           </div>
         </li>
       </ul>
