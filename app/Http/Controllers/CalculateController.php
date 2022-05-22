@@ -41,7 +41,7 @@ class CalculateController extends Controller
             $result = collect($arrF); //mengubah array ke bentuk collection
             $lastData = last($arrF);
             if ($request->metode =='SES') {
-                $forecasting = $lastData['f'];
+                $forecasting = $lastData['aktual']*$a+(1-$a)*$lastData['f'];
             } else{
                 $forecasting = $lastData['a'] + ($lastData['b'] * 1);
             }
