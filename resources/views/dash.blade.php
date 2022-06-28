@@ -6,7 +6,7 @@
       <h3 class="font-weight-normal">Welcome Berlian</h3>
     </div>
 </div>
-<div class="row">
+  {{-- <div class="row">
     <div class="col-md-6 grid-margin transparent">
       <div class="row">
         <div class="col-md-6 mb-4 stretch-card transparent">
@@ -29,6 +29,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
 @endsection

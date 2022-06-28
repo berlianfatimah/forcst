@@ -16,7 +16,6 @@
               <table id="" class="display expandable-table" style="width:100%">
                 <thead>
                   <tr>
-                    <th>#</th>
                     <th>Provinsi</th>
                     <th>Tahun</th>
                     <th>Produksi Padi</th>
@@ -28,13 +27,12 @@
                 <tbody>
                   @forelse ($results as $result)
                   <tr>
-                    <td>1</td>
                     <td>{{$provinsi->province}}</td>
                     <td>{{ $result['periode'] }}</td>
                     <td>{{ $result['aktual'] }}</td>
                     <td>{{ round($result['f'], 2) }}</td>
                     <td>{{ round($result['abs_e'], 2) }}</td>
-                    <td>{{ round($result['percent_e'], 2) }}</td>
+                    <td>{{ round($result['percent_e'], 3) }}</td>
                   </tr>
                   @empty
                   @endforelse
@@ -92,6 +90,11 @@
             <canvas id="bar"></canvas>
           </div>
         </div>
+        <div class="card mt-4">
+          <div class="card-body">
+            <canvas id="bar2"></canvas>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -101,33 +104,69 @@
 	<script>
         var data = JSON.parse(`<?php echo $chartData; ?>`);
 
-        var chartColors = {
-            red: 'rgb(255, 99, 132)',
-            orange: 'rgb(255, 159, 64)',
-            yellow: 'rgb(255, 205, 86)',
-            green: 'rgb(75, 192, 192)',
-            info: '#41B1F9',
-            blue: '#3245D1',
-            purple: 'rgb(153, 102, 255)',
-            grey: '#EBEFF6',
-            color1: '#534340',
-            color2: '#BB9981'
-        };
-
-
-
         var ctxBar = document.getElementById("bar").getContext("2d");
+        var ctxBar2 = document.getElementById("bar2").getContext("2d");
         var myBar = new Chart(ctxBar, {
-            type: 'bar',
+            type: 'line',
+            data: {
+                labels: data.alpha,
+                datasets: [{
+                    label: 'MAPE',
+                    // backgroundColor: chartColors.color1,
+                    data: data.mape,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                barRoundness: 1,
+                title: {
+                    display: true,
+                    text: "Grafik Mean Absolute Percentage Error"
+                },
+                legend: {
+                    display: false
+                },
+                
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            padding: 10,
+                        },
+                        gridLines: {
+                            drawBorder: false,
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    }]
+                },
+
+            }
+        });
+        var myBar2 = new Chart(ctxBar2, {
+            type: 'line',
             data: {
                 labels: data.periode,
                 datasets: [{
-                    label: 'data aktual',
-                    backgroundColor: chartColors.color1,
+                    label: 'Data Aktual',
+                    // backgroundColor: chartColors.color1,
                     data: data.aktual,
-                },{
-                    label: 'ramalan',
-                    backgroundColor: chartColors.color2,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                },
+                {
+                    label: 'Prediksi',
+                    fill: false,
+                    borderColor: 'rgb(75, 100, 192)',
+                    tension: 0.1,
                     data: data.forcasting,
                 }]
             },
@@ -136,7 +175,7 @@
                 barRoundness: 1,
                 title: {
                     display: true,
-                    text: "Grafik Perbandingan"
+                    text: "Grafik Data Aktual dan Peramalan"
                 },
                 legend: {
                     display: false

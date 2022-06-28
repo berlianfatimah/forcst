@@ -37,7 +37,6 @@
                   <table id="" class="display expandable-table" style="width:100%">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>Provinsi</th>
                         <th>Aksi</th>
                       </tr>
@@ -45,7 +44,6 @@
                     <tbody>
                         @foreach ($provinces as $province)
                         <tr>
-                            <td>1</td>
                             <td>{{ $province->province }}</td>
                             <td>
                                 <a href="/province/{{ $province->id }}/edit" class="btn btn-primary btn-sm">edit</a>
